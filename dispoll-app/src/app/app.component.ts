@@ -27,4 +27,8 @@ export class AppComponent {
   public addChoice() {
     if (this.choices.length < 10) this.choices.push('');
   }
+
+  public trackBy(index: any, item: any) {
+    return index;
+  }
 }

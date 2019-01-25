@@ -5,8 +5,8 @@
   <mat-form-field>
     <input matInput placeholder="Enter your question" [(ngModel)]="question">
   </mat-form-field>
-  <mat-form-field *ngFor="let choice of choices; let i = index">
-    <input matInput placeholder="Choice {{i+1}}" [(ngModel)]="choice.value">
+  <mat-form-field *ngFor="let choice of choices; let i = index; trackBy: trackBy">
+    <input matInput placeholder="Choice {{i+1}}" [(ngModel)]="choices[i]">
   </mat-form-field>
   <mat-divider></mat-divider>
   <button mat-button (click)="addChoice()">Add choice</button>
