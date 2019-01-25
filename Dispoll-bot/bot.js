@@ -16,9 +16,13 @@ client.login(config.discordClientID);
 
 function buildChoices(choices) {
     let choicesStringValue = '';
-    choices.forEach((choice, iterator) => {
-        choicesStringValue += `${digimojis[iterator]} ${choice}\n`
-    })
+    if (choices) {
+        choices.forEach((choice, iterator) => {
+            choicesStringValue += `${digimojis[iterator]} ${choice}\n`
+        })
+    } else {
+        choicesStringValue += '✅ Yes\n❌ No'
+    }
     return choicesStringValue;
 }
 
@@ -35,7 +39,7 @@ io.on('connection', socket => {
         console.log('Received new poll', poll)
         try {
             client.channels.get(poll.discordID).send(buildEmbed(poll.question, poll.choices))
-        } catch(error) {
+        } catch (error) {
             console.log(error)
         }
     })

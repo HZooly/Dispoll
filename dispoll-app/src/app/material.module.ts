@@ -5,9 +5,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatTooltipModule, MatDialogModule],
-  exports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatTooltipModule, MatDialogModule],
+  imports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatCheckboxModule
+  ],
+  exports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatCheckboxModule
+  ],
 })
 export class MaterialModule { }
