@@ -1,5 +1,5 @@
 export class Poll {
-  discordID: string;
+  discordName: string;
   question: string;
   choices: Array<String>;
 

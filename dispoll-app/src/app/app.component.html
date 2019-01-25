@@ -1,14 +1,16 @@
 <div>
-  <mat-form-field>
-    <input matInput placeholder="Discord Channel ID" [(ngModel)]="discordID">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Enter your question" [(ngModel)]="question">
-  </mat-form-field>
-  <mat-form-field *ngFor="let choice of choices; let i = index; trackBy: trackBy">
+  <div>
+    <mat-form-field class="spaced">
+      <input matInput placeholder="Discord Channel ID" [(ngModel)]="discordID">
+    </mat-form-field>
+    <mat-form-field class="spaced">
+      <input matInput placeholder="Enter your question" [(ngModel)]="question">
+    </mat-form-field>
+  </div>
+  <mat-form-field class="spaced" *ngFor="let choice of choices; let i = index; trackBy: trackBy">
     <input matInput placeholder="Choice {{i+1}}" [(ngModel)]="choices[i]">
   </mat-form-field>
   <mat-divider></mat-divider>
-  <button mat-button (click)="addChoice()">Add choice</button>
-  <button mat-button (click)="newPoll()">New</button>
+  <button class="spaced" mat-raised-button color="accent" (click)="addChoice()">Add choice</button>
+  <button class="spaced" mat-raised-button color="primary" [disabled]="isFormValid()" (click)="newPoll()">Send</button>
 </div>
