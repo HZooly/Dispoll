@@ -10,7 +10,6 @@ export class PollService {
   constructor(private socket: Socket) { }
 
   public newPoll(poll: Poll) {
-    console.log(poll)
     this.socket.emit('newPoll', poll);
   }
 }

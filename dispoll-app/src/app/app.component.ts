@@ -23,6 +23,12 @@ export class AppComponent {
       choices: this.sanitizeChoices()
     });
     this._poll.newPoll(poll);
+    this.clearInput();
+  }
+
+  private clearInput(): void {
+    this.question = '';
+    this.choices = [];
   }
 
   public isFormValid(): boolean {
