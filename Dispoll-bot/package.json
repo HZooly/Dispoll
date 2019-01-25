@@ -1,0 +1,12 @@
+{
+    "name": "dispoll",
+    "version": "0.0.1",
+    "description": "Bot created with create-discord-bot CLI",
+    "main": "cli.js",
+    "author": "create-discord-bot",
+    "dependencies": {
+        "discord.js": "^11.3.2",
+        "express": "^4.16.4",
+        "socket.io": "^2.2.0"
+    }
+}
