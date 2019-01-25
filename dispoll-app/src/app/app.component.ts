@@ -13,16 +13,17 @@ export class AppComponent {
   discordID: string;
   question: string;
   choices: Array<string> = ['First choice'];
+  trueFalse: boolean = false;
 
   constructor(private _poll: PollService, private dialog: MatDialog) { }
 
   public newPoll(): void {
-    if (!this.discordID || !this.question || !this.choices) return;
+    if (!this.discordID || !this.question || (!this.choices && !this.trueFalse)) return;
     
     const poll = new Poll({
       discordID: this.discordID,
       question: this.question,
-      choices: this.sanitizeChoices()
+      choices: this.trueFalse ? null : this.sanitizeChoices()
     });
     this._poll.newPoll(poll);
     this.clearInput();
@@ -31,6 +32,7 @@ export class AppComponent {
   private clearInput(): void {
     this.question = '';
     this.choices = [];
+    this.trueFalse = false;
   }
 
   public isFormValid(): boolean {
@@ -42,7 +44,7 @@ export class AppComponent {
   }
 
   private areChoicesValid(): boolean {
-    return this.sanitizeChoices().length > 1;
+    return this.sanitizeChoices().length > 1 || this.trueFalse;
   }
 
   public addChoice(): void {
@@ -54,6 +56,6 @@ export class AppComponent {
   }
 
   public openHelp(): void {
-    const dialogRef = this.dialog.open(HelpDialog);
+    this.dialog.open(HelpDialog);
   }
 }
