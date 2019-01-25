@@ -33,7 +33,11 @@ io.on('connection', socket => {
     console.log('Socket connected !')
     socket.on('newPoll', poll => {
         console.log('Received new poll', poll)
-        client.channels.get(poll.discordID).send(buildEmbed(poll.question, poll.choices))
+        try {
+            client.channels.get(poll.discordID).send(buildEmbed(poll.question, poll.choices))
+        } catch(error) {
+            console.log(error)
+        }
     })
 })
 http.listen(3333)
