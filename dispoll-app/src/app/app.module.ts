@@ -1,3 +1,4 @@
+import { HelpDialog } from './dialog/help-dialog.component';
 import { MaterialModule } from './material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,7 +17,8 @@ const config: SocketIoConfig = { url: SocketConfig.socketURL, options: {} };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HelpDialog
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,7 @@ const config: SocketIoConfig = { url: SocketConfig.socketURL, options: {} };
     BrowserAnimationsModule,
     SocketIoModule.forRoot(config)
   ],
+  entryComponents: [HelpDialog],
   providers: [PollService],
   bootstrap: [AppComponent]
 })

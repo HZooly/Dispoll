@@ -1,6 +1,8 @@
+import { HelpDialog } from './dialog/help-dialog.component';
 import { PollService } from './models/poll.service';
 import { Component } from '@angular/core';
 import { Poll } from './models/poll';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,7 @@ export class AppComponent {
   question: string;
   choices: Array<string> = ['First choice'];
 
-  constructor(private _poll: PollService) { }
+  constructor(private _poll: PollService, private dialog: MatDialog) { }
 
   public newPoll(): void {
     if (!this.discordID || !this.question || !this.choices) return;
@@ -49,5 +51,9 @@ export class AppComponent {
 
   public trackBy(index: any, item: any): any {
     return index;
+  }
+
+  public openHelp(): void {
+    const dialogRef = this.dialog.open(HelpDialog);
   }
 }

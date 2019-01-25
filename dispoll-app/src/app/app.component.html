@@ -3,6 +3,9 @@
     <mat-form-field class="spaced">
       <input matInput placeholder="Discord Channel ID" [(ngModel)]="discordID">
     </mat-form-field>
+    <button (click)="openHelp()" mat-mini-fab color="primary" matTooltip="How to find it?" matTooltipPosition="right">?</button>
+  </div>
+  <div>
     <mat-form-field class="spaced">
       <input matInput placeholder="Enter your question" [(ngModel)]="question">
     </mat-form-field>

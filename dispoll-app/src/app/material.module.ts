@@ -3,10 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule],
-  exports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatTooltipModule, MatDialogModule],
+  exports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatTooltipModule, MatDialogModule],
 })
 export class MaterialModule { }
