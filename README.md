@@ -30,4 +30,4 @@ Feel free to make any contributions on this project !
 
 ### License
 
-This project is licensed under the MIT Licence - see the [LICENSE.md]( for details.
+This project is licensed under the MIT Licence - see the [LICENSE.md](https://github.com/HZooly/Dispoll/blob/master/LICENSE.md) for details.
