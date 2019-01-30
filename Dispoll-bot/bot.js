@@ -12,6 +12,7 @@ const PREFIX = '/dispoll'
 const client = new Discord.Client()
 client.on('ready', () => {
     console.log('Bot is ready!')
+    client.user.setActivity('/dispoll for help')
 })
 client.login(config.discordClientID)
 
