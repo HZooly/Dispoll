@@ -48,6 +48,8 @@ client.on('message', message => {
         args.shift()
         message.channel.send(buildEmbed(question, args)).then(() => {
             message.delete(200)
+        }).catch(err => {
+            console.log(err)
         })
     } catch (err) {
         console.log(err)
