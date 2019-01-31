@@ -44,7 +44,7 @@ client.on('message', message => {
     try {
         const question = args[0]
         if(!question)
-            return message.channel.send('Usage: `/dispoll Question ; Answer 1 ; Answer 2; Answer ...`')
+            return message.channel.send('Usage: `/dispoll Question ; Answer 1 ; Answer 2 ; Answer ...`')
         args.shift()
         message.channel.send(buildEmbed(question, args)).then(() => {
             message.delete(200)
