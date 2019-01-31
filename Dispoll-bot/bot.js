@@ -16,7 +16,7 @@ client.on('ready', () => {
 })
 client.login(config.discordClientID)
 
-function buildChoices(choices) {
+const buildChoices = choices => {
     let choicesStringValue = ''
     if (choices && choices.length > 0) {
         choices.filter(c => c.length > 0)
@@ -29,7 +29,7 @@ function buildChoices(choices) {
     return choicesStringValue
 }
 
-function buildEmbed(question, choices) {
+const buildEmbed = (question, choices) => {
     console.log(question, choices)
     return new Discord.RichEmbed()
         .setTitle('A new poll arrived!')
@@ -67,4 +67,5 @@ io.on('connection', socket => {
         }
     })
 })
+
 http.listen(3333)
