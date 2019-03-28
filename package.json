@@ -1,0 +1,20 @@
+{
+  "name": "dispoll",
+  "version": "1.0.0",
+  "description": "Dispoll Discord Bot",
+  "scripts": {
+    "dev": "./node_modules/typescript/bin/tsc -w",
+    "build": "./node_modules/typescript/bin/tsc",
+    "start": "node ./build/index.js"
+  },
+  "author": "torzuoli.hugo@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "node-emoji": "^1.10.0"
+  }
+}
