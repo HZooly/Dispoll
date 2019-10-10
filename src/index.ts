@@ -7,14 +7,14 @@ import Global from './utils/global'
 import Emojis from './utils/emojis'
 
 const Dispoll = new Discord.Client()
-const PREFIX = process.env.PREFIX
-const DIGIMOJIS = Emojis.digits
+const CMD_POLL: string = process.env.CMD_POLL
+const DIGIMOJIS: string[] = Emojis.digits
 
 Dispoll.on('ready', () => {
   Dispoll.user.setActivity('/dispoll for help...')
 })
 
-const buildChoices = (choices: string[]) => {
+const buildChoices = (choices: string[]): string => {
   let choicesStringValue = ''
   if (choices && choices.length > 0) {
     choices.filter((c: string) => c.length > 0)
@@ -27,7 +27,7 @@ const buildChoices = (choices: string[]) => {
   return choicesStringValue
 }
 
-const buildEmbed = (question: string, choices: string[], author: string) => {
+const buildEmbed = (question: string, choices: string[], author: string): Discord.RichEmbed => {
   return new Discord.RichEmbed()
     .setDescription(`🗒 Poll from ${Global.mentionUser(author)}`)
     .setColor('#00AE86')
@@ -46,25 +46,52 @@ const react = async (poll: Discord.Message, args: string[]) => {
   }
 }
 
-const addFooter = (question: string, args: string[], authorID: string, id: string) => {
+const addFooter = (question: string, args: string[], authorID: string, id: string): Discord.RichEmbed => {
   return buildEmbed(question, args, authorID).setFooter(`ID: ${id}`)
 }
 
-Dispoll.on('message', (message) => {
-  if (message.author.bot || message.content.indexOf(PREFIX) === -1) return
-  const args = message.content.slice(PREFIX.length).trim().split(';')
-  try {
-    const question = args[0]
-    if (!question)
-      return message.channel.send(`Usage: \`${process.env.PREFIX}  Question ; Choice 1 ; Choice 2 ; Choice 3 ...\``)
-    args.shift()
-    message.channel.send(buildEmbed(question, args, message.author.id)).then((poll: Discord.Message) => {
-      poll.edit(addFooter(question, args, message.author.id, poll.id))
-      react(poll, args)
-      message.delete(200)
+const buildReactionsList = (reactions: Discord.Collection<string, Discord.MessageReaction>) => {
+  let res = ''
+  reactions.forEach((reaction) => {
+    res += `${reaction.emoji} [${reaction.count - 1}]: `
+    reaction.users.forEach((user) => {
+      if (!user.bot) res += `${Global.mentionUser(user.id)} `
     })
-  } catch (err) {
-    console.log(err)
+    res += '\n'
+  })
+  return res
+}
+
+Dispoll.on('message', async (message) => {
+  if (message.author.bot) return
+  const content: string = message.content
+  if (content.indexOf(CMD_POLL) !== -1) {
+    const reactArgs = content.slice(CMD_POLL.length).trim().split(' ')
+    if (typeof parseInt(reactArgs[0], 10) === 'number' && reactArgs.length === 1) {
+      try {
+        const lastMessage = await message.channel.fetchMessage(reactArgs[0])
+        const reactions = lastMessage.reactions
+        return message.channel.send(buildReactionsList(reactions)).then((_) => {
+          message.delete(200)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    const args = content.slice(CMD_POLL.length).trim().split(';')
+    try {
+      const question = args[0]
+      if (!question)
+        return message.channel.send(`Usage: \`${process.env.CMD_POLL}  Question ; Choice 1 ; Choice 2 ; Choice 3 ...\``)
+      args.shift()
+      message.channel.send(buildEmbed(question, args, message.author.id)).then((poll: Discord.Message) => {
+        poll.edit(addFooter(question, args, message.author.id, poll.id))
+        react(poll, args)
+        message.delete(200)
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 })
 
