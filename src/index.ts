@@ -1,10 +1,13 @@
 import * as Discord from 'discord.js'
+// tslint:disable-next-line: no-var-requires
+require('dotenv').config()
 
-import Configuration from './utils/configuration'
+import Global from './utils/global'
+
 import Emojis from './utils/emojis'
 
 const Dispoll = new Discord.Client()
-const PREFIX = Configuration.prefix
+const PREFIX = process.env.PREFIX
 const DIGIMOJIS = Emojis.digits
 
 Dispoll.on('ready', () => {
@@ -19,16 +22,16 @@ const buildChoices = (choices: string[]) => {
         choicesStringValue += `${DIGIMOJIS[iterator]} ${choice}\n`
       })
   } else {
-    choicesStringValue += `${Emojis.yes} Yes\n${Emojis.no} No`
+    choicesStringValue += `${Emojis.yes} ${Emojis.no}`
   }
   return choicesStringValue
 }
 
-const buildEmbed = (question: string, choices: string[]) => {
+const buildEmbed = (question: string, choices: string[], author: string) => {
   return new Discord.RichEmbed()
-    .setTitle('A new poll arrived!')
+    .setDescription(`🗒 Poll from ${Global.mentionUser(author)}`)
     .setColor('#00AE86')
-    .addField(question, buildChoices(choices))
+    .addField(`**${question}**`, buildChoices(choices))
 }
 
 const react = async (poll: Discord.Message, args: string[]) => {
@@ -43,15 +46,20 @@ const react = async (poll: Discord.Message, args: string[]) => {
   }
 }
 
+const addFooter = (question: string, args: string[], authorID: string, id: string) => {
+  return buildEmbed(question, args, authorID).setFooter(`ID: ${id}`)
+}
+
 Dispoll.on('message', (message) => {
   if (message.author.bot || message.content.indexOf(PREFIX) === -1) return
   const args = message.content.slice(PREFIX.length).trim().split(';')
   try {
     const question = args[0]
     if (!question)
-      return message.channel.send('Usage: `/dispoll Question ; Choice 1 ; Choice 2 ; Choice 3 ...`')
+      return message.channel.send(`Usage: \`${process.env.PREFIX}  Question ; Choice 1 ; Choice 2 ; Choice 3 ...\``)
     args.shift()
-    message.channel.send(buildEmbed(question, args)).then((poll: Discord.Message) => {
+    message.channel.send(buildEmbed(question, args, message.author.id)).then((poll: Discord.Message) => {
+      poll.edit(addFooter(question, args, message.author.id, poll.id))
       react(poll, args)
       message.delete(200)
     })
@@ -60,4 +68,4 @@ Dispoll.on('message', (message) => {
   }
 })
 
-Dispoll.login(Configuration.discordToken)
+Dispoll.login(process.env.DISCORD_TOKEN)
